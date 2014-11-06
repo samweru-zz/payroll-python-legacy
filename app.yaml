@@ -1,0 +1,31 @@
+application: pypayroll
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: true
+
+# admin_console:
+#   pages:
+#   - name: Interactive Console
+#     url: /admin/interactive
+
+handlers:
+
+- url: /web/(.*\.html)
+  static_files: web/assets/html/\1
+  upload: web/assets/html/(.*\.html)
+
+- url: /web/js/(.*)
+  static_files: web/assets/js/\1
+  upload: web/assets/js/(.*\.js)
+
+- url: /web/css/(.*)
+  static_files: web/assets/css/\1
+  upload: web/assets/css/(.*\.css)
+
+# - url: /admin/interactive|/admin/interactive/execute
+#   script: google.appengine.ext.admin.application
+#   login: admin
+
+- url: /.*
+  script: application.app

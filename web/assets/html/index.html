@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr">
+<head profile="http://gmpg.org/xfn/11">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="description" content="description"/>
+<meta name="keywords" content="keywords"/> 
+<meta name="author" content="author"/> 
+<title>Payroll System</title>
+<!--styles-->
+<link href="css/jquery-ui/jquery-ui.css" rel="stylesheet">
+<!-- <link href="css/jquery-ui/jquery-ui.structure.css" rel="stylesheet"> -->
+<!-- <link href="css/jquery-ui/jquery-ui.theme.css" rel="stylesheet"> -->
+<link href="css/style.css" type="text/css" media="screen" rel="stylesheet"/>
+<link href="css/loadmask/jquery.loadmask.css" type="text/css" rel="stylesheet"/>
+<link href="css/flexigrid/flexigrid.css" type="text/css" rel="stylesheet"/>
+<link href="css/treeview/jquery.treeview.css" type="text/css" media="screen" rel="stylesheet"/>
+<!-- <link href="css/datepicker/base/jquery.ui.all.css" rel="stylesheet"> -->
+
+
+<script src="js/lib/jquery-2.1.1.js"></script> 
+<script src="js/lib/jquery-ui.js"></script> 
+<!-- <script src="js/lib/datepicker/jquery-1.4.2.min.js"></script> -->
+<!-- <script src="js/lib/datepicker/jquery.ui.core.js"></script>
+<script src="js/lib/datepicker/jquery.ui.widget.js"></script>
+<script src="js/lib/datepicker/jquery.ui.datepicker.js"></script> -->
+<!-- <script src="js/lib/tabs/jquery.ui.tabs.js"></script> -->
+<script src="js/lib/loadmask/jquery.loadmask.js"></script>
+<script src="js/lib/flexigrid/flexigrid.js"></script>
+<script src="js/lib/treeview/jquery.treeview.js"></script> 
+<script src="js/lib/rest/jquery.rest.js"></script>
+<!---->
+<script src="js/src/application.register.js"></script> 
+<script src="js/src/ui.table.js"></script> 
+<script src="js/src/ui.widget.two.dimension.layout.js"></script> 
+<script src="js/src/ui.form.js"></script> 
+<script src="js/src/ui.widget.form.js"></script> 
+<script src="js/src/ui.basic.controls.js"></script>
+<script src="js/src/ui.basic.widgets.js"></script>
+<script src="js/src/ui.custom.event.js"></script>
+<script src="js/src/ui.treeview.js"></script>
+<script src="js/src/ui.tabs.js"></script>
+<script src="js/src/ui.msg.dialog.js"></script>
+<!---->
+<script src="js/src/app.benefits.tabs.view.js"></script>
+<script src="js/src/app.benefits.employee.view.js"></script>
+<script src="js/src/app.benefits.view.js"></script>
+<script src="js/src/app.benefits.form.view.js"></script>
+<script src="js/src/app.setup.tabs.view.js"></script>
+<script src="js/src/app.setup.nhif.form.view.js"></script>
+<script src="js/src/app.setup.nhif.view.js"></script>
+<script src="js/src/app.setup.paye.form.view.js"></script>
+<script src="js/src/app.setup.paye.view.js"></script>
+<script src="js/src/app.setup.tax.relief.form.view.js"></script>
+<script src="js/src/app.setup.tax.relief.view.js"></script>
+<script src="js/src/app.user.form.validation.js"></script>
+<script src="js/src/app.user.form.view.js"></script>
+<script src="js/src/app.user.view.js"></script>
+<script src="js/src/app.role.form.view.js"></script>
+<script src="js/src/app.role.view.js"></script>
+<script src="js/src/app.employee.tabs.view.js"></script>
+<script src="js/src/app.employee.form.payroll.details.view.js"></script>
+<script src="js/src/app.employee.form.view.js"></script>
+<script src="js/src/app.employee.view.js"></script>
+<script src="js/src/app.reports.employee.view.js"></script>
+<script src="js/src/app.dept.form.view.js"></script>
+<script src="js/src/app.dept.view.js"></script>
+<script src="js/src/app.post.form.view.js"></script>
+<script src="js/src/app.post.view.js"></script>
+<script src="js/src/app.period.form.view.js"></script>
+<script src="js/src/app.login.js"></script>
+<script src="js/src/app.tree.menu.js"></script>
+<script src="js/src/app.post.form.view.js"></script>
+<script src="js/src/app.post.view.js"></script>
+<script src="js/src/app.login.js"></script>
+<script src="js/src/app.tree.menu.js"></script>
+<script> 
+
+	jQuery(document).ready(function($){
+		
+		$.read('/auth/check',function (response) {
+
+			if(response.msg != 'loggedin')
+				App.Login();
+			else
+				App.TreeMenu.renderView();
+		});
+	})
+		
+</script> 
+</head>
+<body>
+<div class="left">
+	<div id="sidetree" style="display:none"> 
+		<div class="treeheader">&nbsp;</div> 
+		<div id="sidetreecontrol"><a href="?#">Collapse</a> | <a href="?#">Expand</a></div> 
+		<ul id="tree" style='display:none;'>
+			<li><a href="#">Home</a></li>
+			<li><a href="javascript:Employee.renderView();">Employee</a></li>
+			<li>Administration
+				<ul>
+					<li><a href="javascript:Role.renderView();">Role</a></li>
+					<li><a href="javascript:User.renderView();">User</a></li>
+					<li><a href="javascript:Period.renderFormView();">Period</a></li>
+				</ul>
+			</li>
+			<li>Registry
+				<ul>
+					<li><a href="javascript:Dept.renderView()">Department</a></li>
+					<li><a href="javascript:Post.renderView()">Post</a></li>
+					<li><a href="javascript:Setup.renderTabView()">Rates</a></li>
+					<li><a href="javascript:Benefits.renderTabView()">Benefits</a></li>
+				</ul>
+			</li>
+			<li><a href="javascript:Reports.Employee.renderView();">Reports</a></li>
+			<li><a href="javascript:App.Logout();">Logout</a></li>
+		</ul>
+	</div>
+</div>
+<div class="top-right-spacer"></div>
+<div class="right"></div>
+</body>
+</html>
