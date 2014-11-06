@@ -5,35 +5,34 @@ from bottle import request, template, redirect
 from src.controller.post import PostController
 from src.controller.department import DepartmentController
 from src.controller.employee import EmployeeController
-from src.controller.payroll import PayrollController
+# from src.controller.payroll import PayrollController
 from lib.util import toClass
 
 from src.model import PayDetails, PayBenefit, Benefit
 
 app = Bottle()
 
-@app.route("benefits/<id>")
-def benefits(id):
-	dPayBenefits = PayrollController.getEmployeeBenefits(int(id))
-	return dPayBenefits
+# @app.route("/<id>/benefits")
+# def benefits(id):
+# 	dPayBenefits = PayrollController.getEmployeeBenefits(int(id))
+# 	return dPayBenefits
 	
-@app.route("payroll")
-def payroll():	
-	# oPayroll = toClass(kwargs)
-	rsBenefits = Benefit.get_by_id([int(sBenefits) for sBenefits in oPayroll.benefits])
+# @app.route("payroll")
+# def payroll():	
+# 	rsBenefits = Benefit.get_by_id([int(sBenefits) for sBenefits in oPayroll.benefits])
 		
-	queryPayBenefits = Query(PayBenefit)
-	queryPayBenefits.filter('benefit in',[rBenefit.key() for rBenefit in rsBenefits])
-	queryPayBenefits.filter('pay_details =',PayDetails.get_by_id(int(oPayroll.id)).key())
-	queryPayBenefits.order('-__key__')
-	rsPayDetails = queryPayBenefits.fetch(1000)
+# 	queryPayBenefits = Query(PayBenefit)
+# 	queryPayBenefits.filter('benefit in',[rBenefit.key() for rBenefit in rsBenefits])
+# 	queryPayBenefits.filter('pay_details =',PayDetails.get_by_id(int(oPayroll.id)).key())
+# 	queryPayBenefits.order('-__key__')
+# 	rsPayDetails = queryPayBenefits.fetch(1000)
 	
-	try:
-		for rPayDetail in rsPayDetails: 
-			rPayDetail.delete()	
-		return {'msg':'Succeded'}
-	except db.TransactionFailedError:
-		return {'msg':'Failure'}
+# 	try:
+# 		for rPayDetail in rsPayDetails: 
+# 			rPayDetail.delete()	
+# 		return {'msg':'Succeded'}
+# 	except db.TransactionFailedError:
+# 		return {'msg':'Failure'}
 
 @app.post("/all")
 def employees():

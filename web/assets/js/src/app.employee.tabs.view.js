@@ -1,35 +1,50 @@
 jQuery(document).ready(function($){
 
 	Employee.renderTabView = function(empId){
-	// Employee.renderTabView = function(empId,payDetails){
-	
+
 		var frmEmployee = Employee.renderFormView(empId);
-		// var frmEmployeePayrollDetails = Employee.PayrollDetails.renderView(empId,payDetails);
+		var tblBenefit = Employee.Benefits.renderView();
+		var tblRelief = Employee.Relief.renderView();
 		
 		var employeeTabs = new ui.Tabs('tabsEmployee');
 		employeeTabs.newTab('tabEmployeeDetails', "Employee Details", frmEmployee.getForm());
-		// employeeTabs.newTab('tabPayrollDetails',"Payroll Details",frmEmployeePayrollDetails.getForm());
+		employeeTabs.newTab('tabPayrollDetails',"Payroll Details");
+		employeeTabs.newTab('tabBenefits',"Benefits", tblBenefit);
+		employeeTabs.newTab('tabTaxRelief',"Tax Relief", tblRelief);
+
 		$('.right')
 			.empty()
 			.append(employeeTabs.getTabs());
 
-		// $($('table')[1]).find('tr:nth-child(3) td:nth-child(2)').attr('align','right');	
-		$("#tabsEmployee").tabs();
+		$("#tabsEmployee").tabs({
+
+			active: 0,
+			activate: function(event, ui){
+
+				switch(ui.newTab.index()){
+					case 1:
+						if(!$("#paydetails").get(0)){
+
+							$("#tabPayrollDetails")
+								.append(Employee.PayDetails.renderView())
+
+							Employee.PayDetails.renderFlexiGrid(empId);
+						}
+					break;
+					case 2:
+
+						Employee.Benefits.renderFlexiGrid();
+					break;
+					case 3:
+						Employee.Relief.renderFlexiGrid();
+					break;
+				}
+			}
+		});
 		
 		$( "#dob" ).datepicker({maxDate:"-18Y", dateFormat:"yy-mm-dd"});
 		$( "#start" ).datepicker({minDate:"0D", dateFormat:"yy-mm-dd"});
 		$( "#end" ).datepicker({minDate:"+1D", dateFormat:"yy-mm-dd"});
-	}
-	
-	// Employee.renderFormsView = function(empId){
-	
-	// 	$('BODY').mask("Loading Employee Details...");
-	// 	if(!!empId)
-	// 		$.read('/employee/benefits/'.concat(empId),function(payDetails){
-			
-	// 			Employee.getEmployeeWidget(empId,payDetails);
-	// 		});
-	// 	else	Employee.getEmployeeWidget("",{id:'',salary:'',hasnhif:'',benefits:{}});
-	// }	
+	}	
 });
 

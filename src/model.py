@@ -42,11 +42,6 @@ class Employee(DictModel):
 	status = db.StringProperty(required=True, choices=set(["Married", "Single", "Divorced", "Widowed"]))
 	bankacc = db.TextProperty()
 	active = db.BooleanProperty()
-	
-class PayDetails(DictModel):
-	employee = db.ReferenceProperty(Employee)
-	gross_salary = db.FloatProperty(required=True)
-	has_nhif = db.BooleanProperty();
 
 class Benefit(DictModel):
 	name = db.StringProperty(required=True)
@@ -56,20 +51,6 @@ class Benefit(DictModel):
 	deduct = db.BooleanProperty()
 	taxable = db.BooleanProperty()
 	active = db.BooleanProperty()
-	
-class PayBenefit(DictModel):
-	benefit = db.ReferenceProperty(Benefit)
-	pay_details = db.ReferenceProperty(PayDetails)
-
-class Period(DictModel):
-	start = db.DateProperty(required=True)
-	end = db.DateProperty(required=True)
-	status = db.TextProperty(required=True)
-	active = db.BooleanProperty()
-	created_by = db.ReferenceProperty(reference_class=User, collection_name="creator")
-	modified_by = db.ReferenceProperty(reference_class=User)
-	created_at = db.DateTimeProperty(auto_now=True)
-	modified_at = db.DateTimeProperty()
 
 class Relief(DictModel):
 	name = db.TextProperty(required=True)
@@ -89,10 +70,35 @@ class Nhif(DictModel):
 	ubound = db.FloatProperty(required=True)
 	amount = db.FloatProperty(required=True)
 
-class PaySlip(DictModel):
+class Period(DictModel):
+	start = db.DateProperty(required=True)
+	end = db.DateProperty(required=True)
+	status = db.TextProperty(required=True)
+	active = db.BooleanProperty()
+	created_by = db.ReferenceProperty(reference_class=User, collection_name="creator")
+	modified_by = db.ReferenceProperty(reference_class=User)
+	created_at = db.DateTimeProperty(auto_now=True)
+	modified_at = db.DateTimeProperty()
+	
+class PayDetails(DictModel):
 	employee = db.ReferenceProperty(Employee)
+	gross_salary = db.FloatProperty(required=True)
+	enable_nhif = db.BooleanProperty(default=False);
+	enable_nssf = db.BooleanProperty(default=False);
+	created_at = db.DateTimeProperty(auto_now=True)
+	active = db.BooleanProperty(default=True)
+	
+class PayBenefit(DictModel):
+	pay_details = db.ReferenceProperty(PayDetails)
+	benefit = db.ReferenceProperty(Benefit)
+
+class PayRelief(DictModel):
+	pay_details = db.ReferenceProperty(PayDetails)
+	relief = db.ReferenceProperty(Relief)
+
+class PaySlip(DictModel):
+	pay_details = db.ReferenceProperty(PayDetails)
 	period = db.ReferenceProperty(Period)
-	paye = db.ReferenceProperty(Nhif)
 
 class PayNhif(DictModel):
 	pay_slip = db.ReferenceProperty(PaySlip)
@@ -101,7 +107,3 @@ class PayNhif(DictModel):
 class PayNssf(DictModel):
 	pay_slip = db.ReferenceProperty(PaySlip)
 	amount = db.FloatProperty(required=True)
-
-class PayRelief(DictModel):
-	pay_slip = db.ReferenceProperty(PaySlip)
-	relief = db.ReferenceProperty(Relief)

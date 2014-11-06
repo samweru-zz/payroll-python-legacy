@@ -1,15 +1,14 @@
 import sha
 
 from datetime import date
-from src.model import Role, User, Department, Post, Employee, Benefit, PayDetails, PayBenefit, Paye, Nhif, Relief
+from src.model import Role, User, Department, Post, Employee, Benefit, PayDetails, PayBenefit, PayRelief, Paye, Nhif, Relief
 
 class Populate(object):
 	def __init__(self):
-		self.user_role()
-		self.employee_post_dept_benefit_paydetail_paybenefit()
-		self.paye_nhif_relief()
+		self.auth()
+		self.payroll()
 
-	def user_role(self):
+	def auth(self):
 		r1 = Role(name="Admin",descr="Administrator")
 		r1.put()
 		r2 = Role(name="User",descr="User")
@@ -23,7 +22,7 @@ class Populate(object):
 					role=r2)
 		u2.put()
 		
-	def employee_post_dept_benefit_paydetail_paybenefit(self):
+	def payroll(self):
 		d1 = Department(name='Human Resource',
 							descr='Human Resource Department')
 		d1.put()
@@ -104,12 +103,29 @@ class Populate(object):
 						active = bool(True))
 		b3.put()
 
+		r1=Relief(name='Personal Relief', monthly=1162.00, annual=13944.00, active=True)
+		r1.put()
+		r2=Relief(name='Insurance Relief', monthly=5000.00, annual=60000.00, active=True)
+		r2.put()
+		r3=Relief(name='Allowable Pension Fund Contribution', monthly=20000.00, annual=240000.00, active=True)
+		r3.put()
+		r4=Relief(name='Allowable HOSP Contribution', monthly=4000.00, annual=48000.00, active=True)
+		r4.put()
+		r5=Relief(name='Owner Occupier Interest', monthly=12500.00, annual=150000.00, active=True)
+		r5.put()
+
 		pd1 = PayDetails(employee = e1,
 							gross_salary = 15000.00)
 		pd1.put()
 		pd2 = PayDetails(employee = e2,
 							gross_salary = 25000.00)
 		pd2.put()
+
+		pr1 = PayRelief(pay_details = pd1, relief = r1)
+		pr1.put()
+
+		pr1 = PayRelief(pay_details = pd2, relief = r2)
+		pr1.put()
 
 		p1 = PayBenefit(benefit = b1,
 							pay_details = pd1)
@@ -123,8 +139,8 @@ class Populate(object):
 		p4 = PayBenefit(benefit = b2,
 							pay_details = pd1)
 		p4.put()
-
-	def paye_nhif_relief(self):
+		
+		###########
 		y1 = Paye(mlbound=0.00, mubound=10164.00, albound=0.00, aubound=121968.00, rate=10)
 		y1.put()
 		y2 = Paye(mlbound=10165.00, mubound=19740.00, albound=121969.00, aubound=236880.00, rate=15)
@@ -156,17 +172,6 @@ class Populate(object):
 		n9.put()
 		n10=Nhif(lbound=100000.00, ubound=99999999.00, amount=2000.00)
 		n10.put()
-
-		r1=Relief(name='Personal Relief', monthly=1162.00, annual=13944.00, active=True)
-		r1.put()
-		r2=Relief(name='Insurance Relief', monthly=5000.00, annual=60000.00, active=True)
-		r2.put()
-		r3=Relief(name='Allowable Pension Fund Contribution', monthly=20000.00, annual=240000.00, active=True)
-		r3.put()
-		r4=Relief(name='Allowable HOSP Contribution', monthly=4000.00, annual=48000.00, active=True)
-		r4.put()
-		r5=Relief(name='Owner Occupier Interest', monthly=12500.00, annual=150000.00, active=True)
-		r5.put()
 
 	def shash(self, hstr):
 		s = sha.new()

@@ -7,7 +7,10 @@ class DictModel(db.Model):
 		if properties is None: properties = self.properties() 
 		for p in properties:
 			if type(getattr(self,p).__class__) is not TypeType:
-				cell.append(getattr(self,p).name)
+				try:
+					cell.append(getattr(self,p).name)
+				except AttributeError:
+					pass
 			else:
 				cell.append(unicode(getattr(self, p)))
 			

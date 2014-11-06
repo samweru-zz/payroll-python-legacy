@@ -6,11 +6,11 @@ from src.controller.payroll import PayrollController
 from google.appengine.ext import db
 
 class EmployeeController:
-	@staticmethod
-	def getEmployeesByBenefit(id):
-		#benefits = PayBenefit.get_by_id(int(id))
-		#print len(benefits)
-		return None
+	# @staticmethod
+	# def getEmployeesByBenefit(id):
+	# 	#benefits = PayBenefit.get_by_id(int(id))
+	# 	#print len(benefits)
+	# 	return None
 	
 	@staticmethod
 	def getEmployees():

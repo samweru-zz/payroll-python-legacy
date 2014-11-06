@@ -21,8 +21,10 @@ jQuery(document).ready(function($){
 
 	App.Reg("App.TreeMenu");
 	
-	App.Reg("Employee.BasicDetails");	
-	App.Reg("Employee.PayrollDetails");	
+	// App.Reg("Employee.BasicDetails");	
+	App.Reg("Employee.PayDetails");	
+	App.Reg("Employee.Benefits");	
+	App.Reg("Employee.Relief");
 	App.Reg("Employee");
 	App.Reg("Role");
 	App.Reg("User");

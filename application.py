@@ -1,7 +1,5 @@
 import sys, bottle 
-from bottle import Bottle
-from bottle import request, template, redirect
-from session import Session
+from bottle import Bottle, request, response, template, redirect, session
 
 from src.handler import auth
 from src.handler import employee
@@ -17,9 +15,9 @@ from src.handler import relief
 
 from fix.datastore import Datastore
 
-bottle.DEBUG = True
+import Cookie
 
-sess = Session()
+bottle.DEBUG = True
 
 app = Bottle()
 app.mount("/auth", auth.app)
