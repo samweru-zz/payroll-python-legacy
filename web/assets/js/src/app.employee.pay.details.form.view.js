@@ -1,6 +1,6 @@
 jQuery(document).ready(function(){
 
-	Employee.PayDetails.renderFormView = function(payDetailsId){
+	Employee.PayDetails.renderFormView = function(employee_id, payDetailsId){
 
 		var frmDialog = $(document.createElement("DIV"));
 		var txtGrossSalary = new TextBox('gross_salary','gross_salary');
@@ -8,10 +8,16 @@ jQuery(document).ready(function(){
 		var chkNssf = new CheckBox("enable_nssf", "enable_nssf", true, 1);
 		var chkActive = new CheckBox("active", "active", true, 1);
 		
-		var frmPayDetails = new ui.widget.Form("dept-form","/payroll/employee/pay/details/".concat((!!payDetailsId)?'update':'add'));
+		var submit_url = "/payroll/employee/";
+		if(!!payDetailsId)
+			submit_url = submit_url.concat("pay/details/update");
+		else
+			submit_url = submit_url.concat(employee_id).concat("/pay/details/add");
+
+		var frmPayDetails = new ui.widget.Form("dept-form", submit_url)
 		
 		if(!!payDetailsId)		
-			$.read('/payroll/employee/pay/details/'.concat(payDetailsId),function(payDetails){
+			$.read('/payroll/employee/pay/details/entry/'.concat(payDetailsId),function(payDetails){
 
 				frmPayDetails.addId('id',payDetails.id);
 				txtGrossSalary.val(payDetails.gross_salary);
@@ -38,19 +44,26 @@ jQuery(document).ready(function(){
 		
 		frmPayDetails.onComplete(function(jsonResult){
 			
-			("#paydetails").flexReload();
 			frmDialog.remove();
-			$("body").unmask();
+			setTimeout(function(){
+
+				$("#paydetails").flexReload();
+				$("body").unmask();
+
+			},1000)
 		});
 		
 		frmPayDetails.addRow();
 		frmPayDetails.add("Gross Salary",txtGrossSalary);
 		frmPayDetails.addRow();
-		frmPayDetails.add("",$("<label for='enable_nhif'>&nbsp;NHIF</label>").prepend(chkNhif));
+		frmPayDetails.add("",$("<label for='enable_nhif'>&nbsp;NHIF</label>")
+								.prepend(chkNhif));
 		frmPayDetails.addRow();
-		frmPayDetails.add("",$("<label for='enable_nssf'>&nbsp;NSSF</label>").prepend(chkNssf));
+		frmPayDetails.add("",$("<label for='enable_nssf'>&nbsp;NSSF</label>")
+								.prepend(chkNssf));
 		frmPayDetails.addRow();
-		frmPayDetails.add("",$("<label for='active'>&nbsp;Active</label>").prepend(chkActive));
+		frmPayDetails.add("",$("<label for='active'>&nbsp;Active</label>")
+								.prepend(chkActive));
 		frmPayDetails.addDefaultButtons();
 
 		frmDialog

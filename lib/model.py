@@ -20,7 +20,10 @@ class DictModel(db.Model):
 		row = dict([('id',self.key().id())])
 		for p in self.properties():
 			if type(getattr(self,p).__class__) is not TypeType:
-				row.update([(p,getattr(self,p).name)])
+				try:
+					row.update([(p,getattr(self,p).name)])
+				except AttributeError:
+					pass
 			else:
 				row.update([(p,unicode(getattr(self, p)))])
 

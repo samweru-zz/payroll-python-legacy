@@ -8,11 +8,25 @@ from bottle import Bottle, request, template, redirect
 		
 app = Bottle();
 
+@app.post("/employee/pay/details/update")
+def update_rate():
+	if PayrollController.updateEmployeePayDetailsEntry(toClass(request.forms.dict)):
+		return {"success":True}
+	else:
+		return {"success":False}
+
+@app.post("/employee/<employee_id>/pay/details/add")
+def employee_pay_details_add(employee_id):
+	employeeNewEntry = toClass(request.forms.dict)
+	if PayrollController.addEmployeePayDetailsEntry(employee_id, employeeNewEntry):
+		return {"success":True}
+	else:
+		return {"success":False}
+
 @app.post("/employee/<employee_id>/pay/details/entries")		
 def employee_pay_details_entries(employee_id):
 	entries = PayrollController.getEmployeePayDetailsEntries(employee_id)
 	dPayDetailsEntries = dict([('page',1), ('rows', [entry.toCells(["gross_salary",
-																	"enable_relief",
 																	"enable_nhif",
 																	"enable_nssf",
 																	"active",
@@ -38,32 +52,19 @@ def employe_tax_relief_entries(pay_details_id):
 	except TypeError:
 		return None
 
-@app.route("/employee/<id>/pay/details")
-def employee_pay_details(id):
+@app.route("/employee/pay/details/entry/<pay_detail_id>")
+def employee_pay_details_entry(pay_detail_id):
 	try:
-		entry = PayrollController.getPayDetailsEntry(int(id))
+		entry = PayrollController.getPayDetailsEntry(pay_detail_id)
 		dPayDetailsEntry = entry.toRow()
 		return dPayDetailsEntry
 	except TypeError:
 		return None
-		
-@app.post("/update/pay/details")
-def update_rate():
-	if PayrollController.updatePayDetails(toClass(request.forms.dict)):
+
+@app.delete("/employee/pay/details/entry/delete/<pay_detail_id>")
+def employee_pay_details_entry_delete(pay_detail_id):
+	if PayrollController.deleteEmployeePayDetails(pay_detail_id):
 		return {"success":True}
 	else:
 		return {"success":False}
 
-@app.post("/add")
-def add_rate():
-	if PayrollController.addPayDetails(toClass(request.forms.dict)):
-		return {"success":True}
-	else:
-		return {"success":False}
-
-@app.delete("/delete/<id>")
-def delete_rate(id):
-	if PayrollController.deletePayDetails(id):
-		return {"success":True}
-	else:
-		return {"success":False}

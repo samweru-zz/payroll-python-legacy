@@ -9,7 +9,7 @@ jQuery(document).ready(function($){
 		return tableBenefits;
 	};
 	
-	Employee.Benefits.renderFlexiGrid = function(pay_details_id){
+	Employee.Benefits.renderFlexiGrid = function(){
 
 		var pay_details_id = $("#paydetails .trSelected").attr("alt");
 

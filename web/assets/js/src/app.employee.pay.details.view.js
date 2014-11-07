@@ -18,7 +18,6 @@ jQuery(document).ready(function($){
 			colModel : [
 				{display: '#', name : '#', width : 180, hide:true, sortable : true, align: 'left'},
 				{display: 'Gross Salary', name : 'gross_salary', width : 180, sortable : true, align: 'left'},
-				{display: 'Tax Relief', name : 'relief', width : 80, sortable : true, align: 'left'},
 				{display: 'NHIF', name : 'nhif', width : 80, sortable : true, align: 'left'},
 				{display: 'NSSF', name : 'nssf', width : 80, sortable : true, align: 'left'},
 				{display: 'Active', name : 'active', width : 80, sortable : true, align: 'left'},
@@ -26,42 +25,41 @@ jQuery(document).ready(function($){
 			buttons : [
 				{name: 'Add', bclass: '', onpress : function(){
 				
-					Employee.PayDetails.renderFormView();
+					Employee.PayDetails.renderFormView(employee_id);
 
 				}},
 				{separator: true},
 				{name: 'Delete', bclass: '', onpress : function(){
 				
-					// if($('.trSelected').attr('alt')!=undefined)
-					// 	new ui.ConfirmDialog("Delete Post", "Are you sure?", {"Yes":function(){
+					if($('.trSelected').attr('alt')!=undefined)
+						new ui.ConfirmDialog("Employee Payroll Details", "Are you sure?", {"Yes":function(){
 
-					// 			$("BODY").mask("wait...");
-					// 			$.destroy('/post/delete/'.concat($('.trSelected').attr('alt')),function(){
+								$("BODY").mask("wait...");
+								$.destroy('/payroll/employee/pay/details/entry/delete/'.concat($('.trSelected').attr('alt')),function(){
 								
-					// 				setTimeout(function(){
+									setTimeout(function(){
 
-					// 					$(".pReload").click();
-					// 					$("BODY").unmask();
+										$("#paydetails").flexReload();
+										$("BODY").unmask();
 
-					// 				},1000)
-					// 			})
-					// 			.error(function(){
+									},1000)
+								})
+								.error(function(){
 
-					// 				$("BODY").unmask();
-					// 				new ui.MessageDialog("Post", "Failed to delete post!");
-					// 			});
+									$("BODY").unmask();
+									new ui.MessageDialog("Employee Payroll Details", "Failed to delete entry!");
+								});
 
-					// 			$(this).dialog("close").remove();
-					// 		}
-					// 	})
+								$(this).dialog("close").remove();
+							}
+						})
 						
 				}},
 				{name: 'Benefits', bclass: '', onpress : function(){
 				
-					// Post.renderFormView();
 					if(!$("#paydetails .trSelected").attr("alt")){
 
-						new ui.MessageDialog("Pay Details", "Please select an entry!");
+						new ui.MessageDialog("Employee Pay Details", "Please select an entry!");
 					}
 					else{
 
@@ -71,10 +69,9 @@ jQuery(document).ready(function($){
 				}},
 				{name: 'Tax Relief', bclass: '', onpress : function(){
 				
-					// Post.renderFormView();
 					if(!$("#paydetails .trSelected").attr("alt")){
 
-						new ui.MessageDialog("Pay Details", "Please select an entry!");
+						new ui.MessageDialog("Employee Pay Details", "Please select an entry!");
 					}
 					else{
 
@@ -83,24 +80,19 @@ jQuery(document).ready(function($){
 					}
 				}},
 			],
-			// searchitems : [
-			// 	{display: 'Name', name : 'name'},
-			// 	{display: 'Department', name : 'department', isdefault: true}],
 			sortname: "name",
 			sortorder: "asc",
-			usepager: true,
 			title: 'Employee Payroll Information',
 			useRp: false,
 			rp: 15,
 			showTableToggleBtn: false,
-			// width: $('.right').width()-10,//700,
 			onRowClick:function(){
 			
-				Employee.PayDetails.renderFormView($(this).attr('alt'));
+				Employee.PayDetails.renderFormView(employee_id, $(this).attr('alt'));
 			},
 			onError:function(){
 
-				new ui.MessageDialog("Pay Details", "Failed to load information!");
+				new ui.MessageDialog("Employee Pay Details", "Failed to load information!");
 			},
 			onSubmit: function addFormData(){
 			

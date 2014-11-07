@@ -1,5 +1,5 @@
 import sys, bottle 
-from bottle import Bottle, request, response, template, redirect, session
+from bottle import Bottle, request, response, template, redirect
 
 from src.handler import auth
 from src.handler import employee

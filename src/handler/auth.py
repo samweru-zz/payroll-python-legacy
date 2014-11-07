@@ -1,13 +1,14 @@
 import sys, bottle 
-
-from bottle import Bottle, request, template, redirect, session
+from bottle import Bottle, request, response, template, redirect
 from src.controller.login import LoginController
+
 
 app = Bottle()
 
 @app.route("/check")
 def check():
-	if session.has_key("username"):
+	username = request.get_cookie("username")
+	if username:
 		return {"msg":"loggedin"}
 	else:
 		return {'msg':'loggedout'}
@@ -19,15 +20,13 @@ def auth():
 
 	user = LoginController.getUser(uname,pword)
 	if user.uname:
-		session["username"] = uname
+		response.set_cookie('username', uname)
 		return {'msg':'Succeded'}
 	else: 
 		return {'msg':'Failure'}
 
 @app.route("/logout")
 def logout():
-	del session["username"]
-	if session.has_key("username"):
-		return {'msg':'Failure'}
-	else: 
-		return {'msg':'Succeded'}
+	response.delete_cookie("username")
+	return {'msg':'Succeded'}
+		

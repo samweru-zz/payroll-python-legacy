@@ -19,7 +19,7 @@ class EmployeeController:
 		
 	@staticmethod
 	def getEmployee(id):
-		employee = Employee.get_by_id(id)
+		employee = Employee.get_by_id(int(id))
 		return employee
 		
 	@staticmethod
