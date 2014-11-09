@@ -8,8 +8,25 @@ from bottle import Bottle, request, template, redirect
 		
 app = Bottle();
 
+@app.delete("/employee/benefit/delete/<pay_benefit_id>")
+def employee_benefit_delete(pay_benefit_id):
+	if PayrollController.deleteEmployeeBenefit(pay_benefit_id):
+		return {"success":True}
+	else:
+		return {"success":False}
+
+@app.post("/employee/benefit/add")
+def employee_benefit_add():
+	if not PayrollController.benefitExists(toClass(request.forms.dict)):
+		if PayrollController.addEmployeeBenefit(toClass(request.forms.dict)):
+			return {"success":True}
+		else:
+			return {"success":False}
+	else:
+		return {"success":False, "msg":"Benefit already exists for employee!"}
+
 @app.post("/employee/pay/details/update")
-def update_rate():
+def employee_pay_details_update():
 	if PayrollController.updateEmployeePayDetailsEntry(toClass(request.forms.dict)):
 		return {"success":True}
 	else:

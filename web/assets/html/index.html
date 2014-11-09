@@ -8,22 +8,13 @@
 <title>Payroll System</title>
 <!--styles-->
 <link href="css/jquery-ui/jquery-ui.css" rel="stylesheet">
-<!-- <link href="css/jquery-ui/jquery-ui.structure.css" rel="stylesheet"> -->
-<!-- <link href="css/jquery-ui/jquery-ui.theme.css" rel="stylesheet"> -->
 <link href="css/style.css" type="text/css" media="screen" rel="stylesheet"/>
 <link href="css/loadmask/jquery.loadmask.css" type="text/css" rel="stylesheet"/>
 <link href="css/flexigrid/flexigrid.css" type="text/css" rel="stylesheet"/>
 <link href="css/treeview/jquery.treeview.css" type="text/css" media="screen" rel="stylesheet"/>
-<!-- <link href="css/datepicker/base/jquery.ui.all.css" rel="stylesheet"> -->
-
-
+<!--styles-->
 <script src="js/lib/jquery-2.1.1.js"></script> 
 <script src="js/lib/jquery-ui.js"></script> 
-<!-- <script src="js/lib/datepicker/jquery-1.4.2.min.js"></script> -->
-<!-- <script src="js/lib/datepicker/jquery.ui.core.js"></script>
-<script src="js/lib/datepicker/jquery.ui.widget.js"></script>
-<script src="js/lib/datepicker/jquery.ui.datepicker.js"></script> -->
-<!-- <script src="js/lib/tabs/jquery.ui.tabs.js"></script> -->
 <script src="js/lib/loadmask/jquery.loadmask.js"></script>
 <script src="js/lib/flexigrid/flexigrid.js"></script>
 <script src="js/lib/treeview/jquery.treeview.js"></script> 
@@ -70,6 +61,7 @@
 <script src="js/src/app.post.form.view.js"></script>
 <script src="js/src/app.post.view.js"></script>
 <script src="js/src/app.period.form.view.js"></script>
+<script src="js/src/app.period.view.js"></script>
 <script src="js/src/app.login.js"></script>
 <script src="js/src/app.tree.menu.js"></script>
 <script src="js/src/app.post.form.view.js"></script>
@@ -98,12 +90,12 @@
 		<div id="sidetreecontrol"><a href="?#">Collapse</a> | <a href="?#">Expand</a></div> 
 		<ul id="tree" style='display:none;'>
 			<li><a href="#">Home</a></li>
-			<li><a href="javascript:Employee.renderView();">Employee</a></li>
+			<li><a href="javascript:Employee.renderDetailsView();">Employee</a></li>
 			<li>Administration
 				<ul>
 					<li><a href="javascript:Role.renderView();">Role</a></li>
 					<li><a href="javascript:User.renderView();">User</a></li>
-					<li><a href="javascript:Period.renderFormView();">Period</a></li>
+					<li><a href="javascript:Period.renderView();">Period</a></li>
 				</ul>
 			</li>
 			<li>Registry
@@ -114,7 +106,7 @@
 					<li><a href="javascript:Benefits.renderTabView()">Benefits</a></li>
 				</ul>
 			</li>
-			<li><a href="javascript:Reports.Employee.renderView();">Reports</a></li>
+			<li><a href="javascript:Employee.renderReportView();">Reports</a></li>
 			<li><a href="javascript:App.Logout();">Logout</a></li>
 		</ul>
 	</div>

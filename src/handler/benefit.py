@@ -16,6 +16,12 @@ def benefits():
 	dBenefits = dict([('page',1), ('rows',[rBenefit.toCells(columns) for rBenefit in rsBenefits])])
 	dBenefits.update(total=len(dBenefits['rows']))
 	return dBenefits
+
+@app.route("/list")
+def list_benefits():
+	rsBenefits = BenefitController.getBenefits()
+	dBenefits = [rBenefit.toRows(['name']) for rBenefit in rsBenefits]
+	return {"benefits": dBenefits}
 	
 @app.route("/view/<id>")
 def view_benefit(id):
@@ -25,12 +31,6 @@ def view_benefit(id):
 		return dBenefit
 	except TypeError:
 		return None
-
-@app.route("/ist")
-def list_benefits():
-	rsBenefits = BenefitController.getBenefits()
-	dBenefits = [rBenefit.toRows(['name']) for rBenefit in rsBenefits]
-	return dBenefits
 	
 @app.post("/update")
 def update_benefit():

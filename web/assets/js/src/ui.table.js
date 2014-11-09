@@ -14,14 +14,23 @@ jQuery(document).ready(function($){
 			this.uiTbl.append(this.uiTblRow);
 		};
 		
-		this.newCell = function(html,id,cssClass,colSpan,rowSpan){
+		this.newCell = function(elem,id,cssClass,colSpan,rowSpan){
 		
 			this.uiTblCell = $("<td></td>");
 			this.uiTblCell.attr("rowspan",rowSpan);
 			this.uiTblCell.attr("colspan",colSpan);
 			this.uiTblCell.attr('id',id)
 			this.uiTblCell.addClass(cssClass)
-			this.uiTblCell.html(html);
+
+			if(typeof elem == "string"){
+
+				this.uiTblCell.html(elem);
+			}
+			else if(typeof elem == "object"){
+
+				this.uiTblCell.append(elem)
+			}
+
 			this.uiTblRow.append(this.uiTblCell);
 		};
 		

@@ -12,6 +12,7 @@ from src.handler import payroll
 from src.handler import paye
 from src.handler import nhif
 from src.handler import relief
+from src.handler import period
 
 from fix.datastore import Datastore
 
@@ -31,6 +32,7 @@ app.mount("/payroll", payroll.app)
 app.mount("/paye", paye.app)
 app.mount("/nhif", nhif.app)
 app.mount("/relief", relief.app)
+app.mount("/period", period.app)
 
 @app.route('/')
 def index():

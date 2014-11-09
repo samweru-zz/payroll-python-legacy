@@ -35,7 +35,7 @@ jQuery(document).ready(function($){
 						new ui.ConfirmDialog("Employee Payroll Details", "Are you sure?", {"Yes":function(){
 
 								$("BODY").mask("wait...");
-								$.destroy('/payroll/employee/pay/details/entry/delete/'.concat($('.trSelected').attr('alt')),function(){
+								$.destroy('/payroll/employee/pay/details/entry/delete/'.concat($('#paydetails .trSelected').attr('alt')),function(){
 								
 									setTimeout(function(){
 
@@ -63,8 +63,14 @@ jQuery(document).ready(function($){
 					}
 					else{
 
+						var pay_details_id = $("#paydetails .trSelected").attr("alt")
 						$("#tabsEmployee").tabs({active:2});
-						$("#benefits").flexReload();
+						$("#benefits")
+							.flexOptions({
+
+								url: '/payroll/employee/pay/details/'.concat(pay_details_id).concat('/benefits'),
+							})
+							.flexReload();
 					}
 				}},
 				{name: 'Tax Relief', bclass: '', onpress : function(){
