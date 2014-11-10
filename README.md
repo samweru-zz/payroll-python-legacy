@@ -14,3 +14,8 @@ password: **admin**
 
 1. Appengine
 2. Bottle
+
+## TODO
+
+1. Compression of assets
+2. + much more :)
