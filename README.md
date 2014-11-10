@@ -3,9 +3,9 @@ Python Payroll
 
 ## Demo
 
-This project is still a **work in progress**
-you may encounter error with ui and data load
-to view demo click [here.](http://pypayroll.appspot.com/)
+This project is still a **work in progress**,
+you may encounter errors with ui and data load.
+To view demo click [here.](http://pypayroll.appspot.com/)
 
 username: **sa**
 password: **admin**
