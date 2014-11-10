@@ -81,8 +81,14 @@ jQuery(document).ready(function($){
 					}
 					else{
 
+						var pay_details_id = $("#paydetails .trSelected").attr("alt");
 						$("#tabsEmployee").tabs({active:3});
-						$("#taxrelief").flexReload();
+						$("#taxrelief")
+							.flexOptions({
+
+								url: '/payroll/employee/pay/details/'.concat(pay_details_id).concat('/tax/relief/details'),
+							})
+							.flexReload();
 					}
 				}},
 			],

@@ -121,7 +121,7 @@ jQuery(document).ready(function($){
 			showTableToggleBtn: false,
 			onRowClick:function(){
 			
-				Employee.Benefits.renderFormView($(this).attr('alt'));
+				//
 			},
 			onError:function(){
 

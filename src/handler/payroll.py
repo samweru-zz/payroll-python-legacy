@@ -2,11 +2,22 @@ from src.model import PayDetails, Benefit
 from src.controller.benefit import BenefitController
 from src.controller.payroll import PayrollController
 from src.controller.employee import EmployeeController
+from src.controller.payslip import PaySlipController
 from lib.util import toClass
 
 from bottle import Bottle, request, template, redirect
 		
 app = Bottle();
+@app.post("/employee/<employee_id>/pay/slip")
+def employee_pay_slip(employee_id):
+	return PaySlipController.employeePayReport(employee_id)
+
+@app.delete("/employee/tax/relief/delete/<pay_benefit_id>")
+def employee_tax_relief_delete(pay_benefit_id):
+	if PayrollController.deleteEmployeeTaxReliefEntry(pay_benefit_id):
+		return {"success":True}
+	else:
+		return {"success":False}
 
 @app.delete("/employee/benefit/delete/<pay_benefit_id>")
 def employee_benefit_delete(pay_benefit_id):
@@ -15,9 +26,19 @@ def employee_benefit_delete(pay_benefit_id):
 	else:
 		return {"success":False}
 
+@app.post("/employee/tax/relief/add")
+def employee_tax_relief_add():
+	if not PayrollController.employeeTaxReliefEntryExists(toClass(request.forms.dict)):
+		if PayrollController.addTaxReliefEntryBenefit(toClass(request.forms.dict)):
+			return {"success":True}
+		else:
+			return {"success":False}
+	else:
+		return {"success":False, "msg":"Tax Relief type already exists for employee!"}
+
 @app.post("/employee/benefit/add")
 def employee_benefit_add():
-	if not PayrollController.benefitExists(toClass(request.forms.dict)):
+	if not PayrollController.employeeBenefitExists(toClass(request.forms.dict)):
 		if PayrollController.addEmployeeBenefit(toClass(request.forms.dict)):
 			return {"success":True}
 		else:

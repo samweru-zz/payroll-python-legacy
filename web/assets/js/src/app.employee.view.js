@@ -40,8 +40,6 @@ jQuery(document).ready(function($){
 		Employee.renderView();
 		Employee.renderFlexiGrid({
 
-			title: "Employees",
-			singleSelect: true,
 			onRowClick:function(){
 			
 				Employee.renderTabView($(this).attr('alt'))
@@ -95,7 +93,7 @@ jQuery(document).ready(function($){
 	
 	Employee.renderFlexiGrid = function(options){
 		
-		$("#employee").flexigrid({
+		$("#employee").flexigrid($.extend({
 
 			url: '/employee/all',
 			dataType: 'json',
@@ -106,10 +104,8 @@ jQuery(document).ready(function($){
 				{display: 'Othernames', name : 'othernames', width : 180, sortable : true, align: 'left'},
 				{display: 'Post', name : 'post', width : 180, sortable : true, align: 'left'},
 				{display: 'Active', name : 'post', width : 180, sortable : true, align: 'left'}],
-			singleSelect : options.singleSelect,
-			buttons : options.buttons,
-			title : options.title,
-			onRowClick: options.onRowClick,
+			title: "Employees",
+			singleSelect: true,
 			searchitems : [
 				{display: 'EmployeeNo.', name : 'name'},
 				{display: 'Surname', name : 'surname', isdefault: true},
@@ -131,6 +127,6 @@ jQuery(document).ready(function($){
 				return true;
 			},
 			height: 200
-		});
+		}, options));
 	};
 }); 

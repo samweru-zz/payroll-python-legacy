@@ -24,51 +24,105 @@ jQuery(document).ready(function($){
 			buttons : [
 				{name: 'Add', bclass: '', onpress : function(){
 				
-					// Post.renderFormView();
+					var payDetailsId = $("#paydetails .trSelected").attr("alt");
+					var taxReliefId = $("#crelief").val();
+					if(!payDetailsId){
+
+						$("#tabsEmployee").tabs({active:1});
+						new ui.MessageDialog("Employee Tax Relief", "Please select employee payroll details entry!");
+					}
+					else{
+
+						if(!taxReliefId){
+
+							new ui.MessageDialog("Employee Tax Relief", "Please select tax relief type from combo box!")	
+						}
+						else{
+
+							$("body").mask("saving tax relief type....");
+							$.create("/payroll/employee/tax/relief/add", {
+
+								"pay_details":payDetailsId,
+								"relief": taxReliefId
+							}, 
+							function(response){
+
+								if(response.success){
+
+									setTimeout(function(){
+
+										$("#taxrelief").flexReload();
+										$("BODY").unmask();
+
+									},1000)
+								}
+								else{
+
+									$("body").unmask();
+									if(response.msg == undefined){
+
+										new ui.MessageDialog("Employee Tax Relief", "Failed to save employee tax relief type!")	
+									}
+									else{
+
+										new ui.MessageDialog("Employee Tax Relief", response.msg)	
+									}
+								}
+							})
+							.error(function(){
+
+								$("body").unmask();
+								new ui.MessageDialog("Employee Tax Relief", "Failed to add tax relief type to employee!")
+							});
+						}
+					}
 
 				}},
 				{separator: true},
 				{name: 'Delete', bclass: '', onpress : function(){
 				
-					// if($('.trSelected').attr('alt')!=undefined)
-					// 	new ui.ConfirmDialog("Delete Post", "Are you sure?", {"Yes":function(){
+					if($('#taxrelief .trSelected').attr('alt')!=undefined)
+						new ui.ConfirmDialog("Delete Employee Tax Relief Entry", "Are you sure?", {"Yes":function(){
 
-					// 			$("BODY").mask("wait...");
-					// 			$.destroy('/post/delete/'.concat($('.trSelected').attr('alt')),function(){
+								$("BODY").mask("wait...");
+								$.destroy('/payroll/employee/tax/relief/delete/'.concat($('#taxrelief .trSelected').attr('alt')),function(){
 								
-					// 				setTimeout(function(){
+									setTimeout(function(){
 
-					// 					$(".pReload").click();
-					// 					$("BODY").unmask();
+										$("#taxrelief").flexReload();
+										$("BODY").unmask();
 
-					// 				},1000)
-					// 			})
-					// 			.error(function(){
+									},1000)
+								})
+								.error(function(){
 
-					// 				$("BODY").unmask();
-					// 				new ui.MessageDialog("Post", "Failed to delete post!");
-					// 			});
+									$("BODY").unmask();
+									new ui.MessageDialog("Employee Tax Relief Entry", "Failed to delete employee tax relief entry!");
+								});
 
-					// 			$(this).dialog("close").remove();
-					// 		}
-					// 	})
-						
+								$(this).dialog("close").remove();
+							}
+						})
 				}},
+				{name: 'Refresh', bclass: '', onpress : function(){
+
+					var pay_details_id = $("#paydetails .trSelected").attr("alt")
+					if(!!pay_details_id)
+						$("#taxrelief")
+							.flexOptions({
+
+								url: '/payroll/employee/pay/details/'.concat(pay_details_id).concat('/tax/relief/details')
+							})
+							.flexReload();
+				}}
 			],
-			// searchitems : [
-			// 	{display: 'Name', name : 'name'},
-			// 	{display: 'Department', name : 'department', isdefault: true}],
 			sortname: "name",
 			sortorder: "asc",
-			// usepager: true,
 			title: 'Employee Tax Relief',
-			// useRp: false,
-			// rp: 15,
 			showTableToggleBtn: false,
-			// width: $('.right').width()-10,//700,
 			onRowClick:function(){
 			
-				Employee.Relief.renderFormView($(this).attr('alt'));
+				//
 			},
 			onError:function(){
 

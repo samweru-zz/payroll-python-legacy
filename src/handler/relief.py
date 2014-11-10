@@ -14,6 +14,12 @@ def rates():
 	dRate.update(total=len(dRate['rows']))
 	return dRate
 
+@app.route("/list")		
+def list_rates():
+	rsRate = ReliefController.getRates()
+	dRate = [rRate.toRows(["name"]) for rRate in rsRate]
+	return {"rates":dRate}
+
 @app.route("/view/<id>")
 def view_rate(id):
 	try:
