@@ -3,7 +3,8 @@ Python Payroll
 
 ## Demo
 
-The demo is still a work in progress
+This project is still a **work in progress**
+you may encounter error with ui and data load
 to view demo click [here.](http://pypayroll.appspot.com/)
 
 username: **sa**
@@ -13,7 +14,3 @@ password: **admin**
 
 1. Appengine
 2. Bottle
-
-
-
-
