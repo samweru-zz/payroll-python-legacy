@@ -1,4 +1,4 @@
-Python Payroll Prototype
+<!--Python Payroll Prototype
 ========================
 
 ## [Demo](http://pypayroll.appspot.com/)
@@ -6,6 +6,7 @@ Python Payroll Prototype
 * username: **sa**
 * password: **admin**
 
+-->
 ## Uses
 
 1. Appengine
